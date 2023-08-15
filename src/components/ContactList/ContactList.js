@@ -1,8 +1,7 @@
 import React from 'react';
 import css from './ContactList.module.css';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { removeContact } from 'redux/phoneSlice';
-import { useDispatch } from 'react-redux';
 
 const ContactList = () => {
   const dispatch = useDispatch();
