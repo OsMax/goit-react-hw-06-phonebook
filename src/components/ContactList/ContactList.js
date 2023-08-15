@@ -1,11 +1,22 @@
 import React from 'react';
 import css from './ContactList.module.css';
+import { useSelector } from 'react-redux';
+import { removeContact } from 'redux/phoneSlice';
+import { useDispatch } from 'react-redux';
 
-const ContactList = ({ contacts, onDeleteContact }) => {
+const ContactList = () => {
+  const dispatch = useDispatch();
+  const contacts = useSelector(state => state.phones.contacts);
+  const filter = useSelector(state => state.phones.filter);
+
+  const contactFilter = contacts.filter(contact =>
+    contact.name.toLocaleLowerCase().includes(filter.toLocaleLowerCase())
+  );
+
   return (
     <div className={css.listContainer}>
       <ul className={css.contactList}>
-        {contacts.map(contact => (
+        {contactFilter.map(contact => (
           <li className={css.listItem} key={contact.id}>
             <div className={css.contactInfo}>
               <span className={css.contactName}>{contact.name}: </span>
@@ -13,7 +24,7 @@ const ContactList = ({ contacts, onDeleteContact }) => {
             </div>
             <button
               className={css.deletButton}
-              onClick={() => onDeleteContact(contact.id)}
+              onClick={() => dispatch(removeContact(contact.id))}
             >
               X
             </button>

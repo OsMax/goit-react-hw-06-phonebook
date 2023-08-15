@@ -1,8 +1,11 @@
 import { useState } from 'react';
 import css from './ContactForm.module.css';
 import { nanoid } from 'nanoid';
+import { useDispatch } from 'react-redux';
+import { addContact } from 'redux/phoneSlice';
 
-const ContactForm = ({ onSubmitData }) => {
+const ContactForm = () => {
+  const dispatch = useDispatch();
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
 
@@ -28,9 +31,11 @@ const ContactForm = ({ onSubmitData }) => {
       window.alert('Please complete all fields');
       return;
     }
-    onSubmitData({ ...{ id: nanoid() }, ...{ name, number } });
+    dispatch(addContact({ ...{ id: nanoid() }, ...{ name, number } }));
+    // onSubmitData({ ...{ id: nanoid() }, ...{ name, number } });
     setName('');
     setNumber('');
+    e.currentTarget.reset();
   };
 
   return (
