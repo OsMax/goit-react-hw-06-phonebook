@@ -11,6 +11,7 @@ import {
 } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 import { phoneSlice } from './phoneSlice';
+import { filterSlice } from './filterSlice';
 
 const rootReduser = combineReducers({ phones: phoneSlice.reducer });
 
@@ -22,7 +23,7 @@ const persistConfig = {
 const persistRed = persistReducer(persistConfig, rootReduser);
 
 export const store = configureStore({
-  reducer: persistRed,
+  reducer: { persistRed, filter: filterSlice.reducer },
   middleware: getDefaultMiddleware =>
     getDefaultMiddleware({
       serializableCheck: {

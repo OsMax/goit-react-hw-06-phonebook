@@ -1,11 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit';
 import initContacts from '../components/base.json';
+import storage from 'redux-persist/lib/storage';
 
 export const phoneSlice = createSlice({
   name: 'phones',
   initialState: {
     contacts: initContacts,
-    filter: '',
   },
   reducers: {
     addContact(state, action) {
@@ -16,10 +16,8 @@ export const phoneSlice = createSlice({
         contact => contact.id !== action.payload
       );
     },
-    setFilter(state, action) {
-      state.filter = action.payload;
-    },
   },
 });
 
-export const { addContact, removeContact, setFilter } = phoneSlice.actions;
+export const { addContact, removeContact } = phoneSlice.actions;
+export const getContacts = state => state.persistRed.phones.contacts;
